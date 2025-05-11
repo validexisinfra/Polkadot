@@ -8,13 +8,6 @@ echo "export NODE_NAME=$NODE_NAME"
 read -p "Enter IP server: " PUBLIC_IP
 echo "export PUBLIC_IP=$PUBLIC_IP"
 
-echo "===> Visit the following link to get the current snapshot URL:"
-echo "https://snapshots.radiumblock.com/providers1.php?name=polkadot_rocksdb"
-echo "Copy the snapshot URL and paste it below."
-
-read -p "Enter the current snapshot URL: " SNAPSHOT_URL
-echo "export SNAPSHOT_URL=$SNAPSHOT_URL"
-
 curl -fsSL https://europe-north1-apt.pkg.dev/doc/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/europe-north-1-apt-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/europe-north-1-apt-archive-keyring.gpg] https://europe-north1-apt.pkg.dev/projects/kagome-408211 kagome main" | sudo tee /etc/apt/sources.list.d/kagome.list
 
@@ -26,7 +19,7 @@ sudo mkdir -p /home/kagome/polkadot-node-1
 sudo chown -R kagome:kagome /home/kagome
 
 cd /home/kagome
-sudo wget "$SNAPSHOT_URL" -O snapshot.tar.lz4
+sudo wget https://snapshots.radiumblock.com/polkadot_25954243_2025-05-11.tar.lz4 -O snapshot.tar.lz4
 sudo lz4 -c -d snapshot.tar.lz4 | sudo tar -x -C /home/kagome/polkadot-node-1
 sudo rm snapshot.tar.lz4
 sudo chown -R kagome:kagome /home/kagome/polkadot-node-1
