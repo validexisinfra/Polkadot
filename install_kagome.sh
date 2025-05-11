@@ -33,7 +33,7 @@ User=kagome
 Group=kagome
 LimitCORE=infinity
 LimitNOFILE=65536
-ExecStart=/usr/bin/kagome \\
+ExecStart=/usr/local/bin/kagome \\
   --name ${NODE_NAME} \\
   --base-path /home/kagome/polkadot-node-1 \\
   --public-addr=/ip4/${PUBLIC_IP}/tcp/30334 \\
@@ -53,8 +53,9 @@ RestartSec=10
 [Install]
 WantedBy=multi-user.target
 EOF
-
+​
 sudo systemctl daemon-reload
 sudo systemctl enable kagome
 sudo systemctl start kagome
-sudo systemctl status kagome
+
+journalctl -u kagome -f
