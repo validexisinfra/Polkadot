@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/paritytech/polkadot/master/docs/img/polkadot-logo.png" alt="Polkadot Logo" width="200"/>
+  <img src="https://polkadot.network/wp-content/themes/polkadot/assets/images/polkadot-logo-color.svg" alt="Polkadot Logo" width="200"/>
 </p>
 
-# Polkadot Infrastructure by validexisinfra
+# Polkadot
 
 This repository provides automated scripts to install, monitor, and benchmark Polkadot-based blockchain nodes.
 
