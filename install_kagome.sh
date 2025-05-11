@@ -18,6 +18,12 @@ sudo useradd -m -r -s /bin/false kagome || true
 sudo mkdir -p /home/kagome/polkadot-node-1
 sudo chown -R kagome:kagome /home/kagome
 
+cd /home/kagome
+#sudo wget https://snapshots.radiumblock.com/polkadot_25954243_2025-05-11.tar.lz4 -O snapshot.tar.lz4
+#sudo lz4 -c -d snapshot.tar.lz4 | sudo tar -x -C /home/kagome/polkadot-node-1
+#sudo rm snapshot.tar.lz4
+sudo chown -R kagome:kagome /home/kagome/polkadot-node-1
+
 sudo tee /etc/systemd/system/kagome.service > /dev/null <<EOF
 [Unit]
 Description=Kagome Node
@@ -48,12 +54,6 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-#cd /home/kagome
-#sudo wget https://snapshots.radiumblock.com/polkadot_25954243_2025-05-11.tar.lz4 -O snapshot.tar.lz4
-#sudo lz4 -c -d snapshot.tar.lz4 | sudo tar -x -C /home/kagome/polkadot-node-1
-#sudo rm snapshot.tar.lz4
-sudo chown -R kagome:kagome /home/kagome/polkadot-node-1
-​
 sudo systemctl daemon-reload
 sudo systemctl enable kagome
 sudo systemctl start kagome
