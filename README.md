@@ -10,7 +10,7 @@ These scripts help streamline node setup, performance measurement, and infrastru
 
 ## 🧱 Installing a Polkadot Node Using Kagome
 
-Deploy a Polkadot node using the [Kagome](https://github.com/ChainSafe/kagome) client in one step:
+Deploy a Polkadot node using the Kagome client in one step:
 
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install_kagome.sh)
