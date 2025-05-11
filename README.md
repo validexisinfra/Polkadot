@@ -10,7 +10,7 @@ These scripts help streamline node setup, performance measurement, and infrastru
 
 ## 🧱 Installing a Polkadot Node Using Kagome
 
-Deploy a Polkadot node using the Kagome client in one step:
+Install Prometheus, Node Exporter, and Alertmanager along with predefined alerts and [Telepush](https://telepush.dev) integration:
 
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install_kagome.sh)
