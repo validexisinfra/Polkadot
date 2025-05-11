@@ -6,9 +6,6 @@ NODE_NAME="my-kagome-node"
 PUBLIC_IP="203.0.113.1"
 SNAPSHOT_URL="https://snapshots.radiumblock.com/polkadot_25954243_2025-05-11.tar.lz4"
 
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y gpg curl lz4 wget
-
 curl -fsSL https://europe-north1-apt.pkg.dev/doc/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/europe-north-1-apt-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/europe-north-1-apt-archive-keyring.gpg] https://europe-north1-apt.pkg.dev/projects/kagome-408211 kagome main" | sudo tee /etc/apt/sources.list.d/kagome.list
 
