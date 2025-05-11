@@ -52,10 +52,8 @@ EOF
 #sudo wget https://snapshots.radiumblock.com/polkadot_25954243_2025-05-11.tar.lz4 -O snapshot.tar.lz4
 #sudo lz4 -c -d snapshot.tar.lz4 | sudo tar -x -C /home/kagome/polkadot-node-1
 #sudo rm snapshot.tar.lz4
-#sudo chown -R kagome:kagome /home/kagome/polkadot-node-1
+sudo chown -R kagome:kagome /home/kagome/polkadot-node-1
 ​
 sudo systemctl daemon-reload
 sudo systemctl enable kagome
 sudo systemctl start kagome
-
-journalctl -u kagome -f
