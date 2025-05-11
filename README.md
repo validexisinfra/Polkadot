@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Polkadot_logo.svg" alt="Polkadot Logo" width="200"/>
-</p>
-
 # Polkadot
 
 This repository provides automated scripts to install, monitor, and benchmark Polkadot-based blockchain nodes.
