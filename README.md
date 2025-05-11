@@ -10,7 +10,7 @@ These scripts help streamline node setup, performance measurement, and infrastru
 
 ## 🧱 Installing a Polkadot Node Using Kagome
 
-Install Prometheus, Node Exporter, and Alertmanager along with predefined alerts and [Telepush](https://telepush.dev) integration:
+Deploy a Polkadot node using the Kagome client in one step:
 
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install_kagome.sh)
@@ -20,7 +20,7 @@ source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/
 
 ## 📡 Monitoring with Prometheus and Alertmanager
 
-Install Prometheus, Node Exporter, and Alertmanager along with predefined alerts and Telepush integration:
+Install Prometheus, Node Exporter, and Alertmanager along with predefined alerts and [Telepush](https://telepush.dev) integration:
 
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install-alertmanager.sh)
