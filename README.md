@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://polkadot.network/wp-content/themes/polkadot/assets/images/polkadot-logo-color.svg" alt="Polkadot Logo" width="200"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Polkadot_logo.svg" alt="Polkadot Logo" width="200"/>
 </p>
 
 # Polkadot
