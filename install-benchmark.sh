@@ -25,7 +25,7 @@ curl https://raw.githubusercontent.com/paritytech/polkadot-sdk/refs/tags/polkado
   --output scripts/frame-weight-template.hbs
 
 frame-omni-bencher v1 benchmark pallet \
-  --runtime target/release/wbuild/polkadot-runtime/polkadot_runtime.compact.compressed.wasm \
+  --runtime target/release/wbuild/westend-runtime/westend_runtime.compact.compressed.wasm \
   --pallet pallet_balances \
   --extrinsic "*" \
   --template scripts/frame-weight-template.hbs \
