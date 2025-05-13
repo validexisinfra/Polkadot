@@ -33,7 +33,7 @@ source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/
 Install a complete monitoring stack including Kagome node, Prometheus, Alertmanager with [Telepush](https://telepush.dev), and Grafana dashboards:
 
 ~~~bash
-source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/kagome_full_stack.sh)
+source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/kagome_prometheus_alerting_grafana.sh)
 ~~~
 
 ---
