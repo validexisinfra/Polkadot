@@ -29,7 +29,7 @@ source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/
 
 📊 **Grafana Dashboard**  
 The Grafana dashboard configuration is included in this repository as [`Polkadot_Dashboard.json`](./Polkadot_Dashboard.json).  
-You can import it manually into Grafana via the UI or configure it automatically using the script.
+You can import it manually into Grafana via the UI.
 
 ---
 
