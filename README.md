@@ -28,6 +28,16 @@ source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/
 
 ---
 
+## 📊 Full Stack Deployment (Node + Monitoring + Grafana)
+
+Install a complete monitoring stack including Kagome node, Prometheus, Alertmanager with [Telepush](https://telepush.dev), and Grafana dashboards:
+
+~~~bash
+source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/kagome_full_stack.sh)
+~~~
+
+---
+
 ## ⚙️ Benchmarking Runtime and Hardware
 
 Run Polkadot runtime extrinsics benchmarking and evaluate your server hardware performance:
