@@ -115,12 +115,7 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9100']
-
-  - job_name: 'custom_node'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['localhost:9615']
-
+  
   - job_name: 'kagome_node'
     scrape_interval: 5s
     static_configs:
@@ -143,7 +138,7 @@ groups:
           description: "${NODE_NAME} is more than 20 blocks behind."
 
       - alert: NodeDown
-        expr: up{job="custom_node"} == 0
+        expr: up{job="kagome_node"} == 0
         for: 1m
         labels:
           severity: critical
@@ -161,7 +156,7 @@ groups:
           description: "Disk usage on ${NODE_NAME} is above 98%."
 
       - alert: NodeNotSyncing
-        expr: substrate_sub_libp2p_sync_is_major_syncing{job="custom_node"} == 1
+        expr: substrate_sub_libp2p_sync_is_major_syncing{job="kagome_node"} == 1
         for: 5m
         labels:
           severity: critical
@@ -170,7 +165,7 @@ groups:
           description: "${NODE_NAME} has not synced blocks for more than 5 minutes."
 
       - alert: HighCPUUsage
-        expr: rate(process_cpu_seconds_total{job="custom_node"}[5m]) > 0.8
+        expr: rate(process_cpu_seconds_total{job="kagome_node"}[5m]) > 0.8
         for: 5m
         labels:
           severity: warning
