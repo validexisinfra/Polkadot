@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Update and upgrade system packages
+sudo apt update && sudo apt upgrade -y
+
+# Install essential dependencies
+sudo apt install -y gpg curl lz4
+
 # Prompt for user input
 read -p "Enter node name: " NODE_NAME
 read -p "Enter public IP address of the server: " PUBLIC_IP
