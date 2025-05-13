@@ -8,6 +8,31 @@ These scripts help streamline node setup, performance measurement, and infrastru
 
 ---
 
+## 🚀 Full Stack Deployment (Node + Monitoring + Grafana)
+
+> 🧩 One-click setup for a full Polkadot infrastructure:
+> - Kagome node
+> - Prometheus + Node Exporter + Alertmanager
+> - Grafana with preconfigured dashboards
+> - [Telepush](https://telepush.dev) alerts integration
+
+Run this to install everything in one go:
+
+~~~bash
+source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/kagome_prometheus_alerting_grafana.sh)
+~~~
+
+> ⚠️ Before running this on a fresh server, install dependencies:
+> ```bash
+> sudo apt update && sudo apt install -y curl gpg lz4 wget apt-transport-https software-properties-common
+> ```
+
+📊 **Grafana Dashboard**  
+The Grafana dashboard configuration is included in this repository as [`Polkadot_Dashboard.json`](./Polkadot_Dashboard.json).  
+You can import it manually into Grafana via the UI or configure it automatically using the script.
+
+---
+
 ## 🧱 Installing a Polkadot Node Using Kagome
 
 Deploy a Polkadot node using the Kagome client in one step:
@@ -24,16 +49,6 @@ Install Prometheus, Node Exporter, and Alertmanager along with predefined alerts
 
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install-alertmanager.sh)
-~~~
-
----
-
-## 📊 Full Stack Deployment (Node + Monitoring + Grafana)
-
-Install a complete monitoring stack including Kagome node, Prometheus, Alertmanager with [Telepush](https://telepush.dev), and Grafana dashboards:
-
-~~~bash
-source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/kagome_prometheus_alerting_grafana.sh)
 ~~~
 
 ---
