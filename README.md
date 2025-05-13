@@ -31,6 +31,16 @@ source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/
 The Grafana dashboard configuration is included in this repository as [`Polkadot_Dashboard.json`](./Polkadot_Dashboard.json).  
 You can import it manually into Grafana via the UI.
 
+🌐 **Access Interfaces**  
+Make sure the following ports are open in your firewall settings to access the monitoring stack:
+
+- Access Prometheus: `http://<your-server-ip>:9090`
+- Access Alertmanager: `http://<your-server-ip>:9093`
+- Access Grafana: `http://<your-server-ip>:3000`
+
+✅ Verify that your Polkadot node metrics (`:9615`) and predefined alerts are visible in Prometheus and Grafana.
+
+---
 ---
 
 ## 🧱 Installing a Polkadot Node Using Kagome
