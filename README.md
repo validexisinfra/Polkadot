@@ -70,3 +70,9 @@ Run Polkadot runtime extrinsics benchmarking and evaluate your server hardware p
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install-benchmark.sh)
 ~~~
+
+---
+---
+
+For more information, including detailed documentation and manual setup instructions, visit:
+👉 https://services.validexis.com/mainnets/polkadot
