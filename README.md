@@ -75,4 +75,4 @@ source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/
 ---
 
 For more information, including detailed documentation and manual setup instructions, visit:
-👉 https://services.validexis.com/mainnets/polkadot
+https://services.validexis.com/mainnets/polkadot
