@@ -212,3 +212,20 @@ sudo systemctl start alertmanager
 
 # Restart Prometheus in case of updates
 sudo systemctl restart prometheus
+
+# Install Grafana Enterprise
+sudo apt-get install -y apt-transport-https software-properties-common wget adduser libfontconfig1
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+echo "deb https://packages.grafana.com/enterprise/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+
+sudo useradd -m -s /bin/bash grafana || true
+sudo groupadd --system grafana || true
+sudo usermod -aG grafana grafana
+
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.3.2_amd64.deb
+sudo dpkg -i grafana-enterprise_9.3.2_amd64.deb
+rm grafana-enterprise_9.3.2_amd64.deb
+
+sudo systemctl daemon-reload
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
