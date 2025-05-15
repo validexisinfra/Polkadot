@@ -40,6 +40,7 @@ ExecStart=/usr/local/bin/kagome \\
   --rpc-port=9944 \\
   --prometheus-port=9615 \\
   --telemetry-url 'wss://telemetry.polkadot.io/submit/ 1' \\
+  --telemetry-url 'wss://telemetry-backend.w3f.community/submit/ 1' \\
   --node-key 63808171009b35fc218f207442e355b0634561c84e0aec2093e3515113475624 \\
   --database rocksdb \\
   --sync Warp \\
