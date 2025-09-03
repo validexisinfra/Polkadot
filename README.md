@@ -11,7 +11,7 @@ These scripts help streamline node setup, performance measurement, and infrastru
 ## 🚀 Full Stack Deployment (Node + Monitoring + Grafana)
 
 > 🧩 One-click setup for a full Polkadot infrastructure:
-> - Kagome node
+> - Polkadot SDK node
 > - Prometheus + Node Exporter + Alertmanager
 > - Grafana with preconfigured dashboards
 > - [Telepush](https://telepush.dev) alerts integration
@@ -43,12 +43,12 @@ Make sure the following ports are open in your firewall settings to access the m
 ---
 ---
 
-## 🧱 Installing a Polkadot Node Using Kagome
+## 🧱 Installing Polkadot SDK
 
-Deploy a Polkadot node using the Kagome client in one step:
+Deploy a Polkadot node using the official Polkadot SDK in one step:
 
 ~~~bash
-source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install_kagome.sh)
+source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/installmain.sh)
 ~~~
 
 ---
@@ -69,6 +69,18 @@ Run Polkadot runtime extrinsics benchmarking and evaluate your server hardware p
 
 ~~~bash
 source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install-benchmark.sh)
+~~~
+
+---
+---
+
+## 📦 Installing a Polkadot Node Using Kagome (Optional)
+
+You can also deploy a Polkadot node using the Kagome client in one step.
+This method is optional — we recommend using the Polkadot SDK as the main approach.
+
+~~~bash
+source <(curl -s https://raw.githubusercontent.com/validexisinfra/polkadot/main/install_kagome.sh)
 ~~~
 
 ---
