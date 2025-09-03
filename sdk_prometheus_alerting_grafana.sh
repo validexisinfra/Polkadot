@@ -10,52 +10,71 @@ read -p "Enter Telepush token: " TELEPUSH_TOKEN
 echo "export NODE_NAME=$NODE_NAME"
 echo "export PUBLIC_IP=$PUBLIC_IP"
 
-# Install Kagome node
-curl -fsSL https://europe-north1-apt.pkg.dev/doc/repo-signing-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/europe-north-1-apt-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/europe-north-1-apt-archive-keyring.gpg] https://europe-north1-apt.pkg.dev/projects/kagome-408211 kagome main" | sudo tee /etc/apt/sources.list.d/kagome.list
+echo "Updating system and installing dependencies..."
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl git make clang pkg-config libssl-dev build-essential -y
+sudo apt install golang-go -y
+sudo apt install apt-transport-https gnupg cmake protobuf-compiler -y
 
+echo "Installing Bazel..."
+curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel-archive-keyring.gpg
+sudo mv bazel-archive-keyring.gpg /usr/share/keyrings
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
 sudo apt update
-sudo apt install -y kagome
 
-sudo useradd -m -r -s /bin/false kagome || true
-sudo mkdir -p /home/kagome/polkadot-node-1
-sudo chown -R kagome:kagome /home/kagome
+echo "Installing Rust..."
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source $HOME/.cargo/env
+rustup update
+rustup component add rust-src
+rustup target add wasm32-unknown-unknown
+rustup install nightly-2024-01-21
+rustup target add wasm32-unknown-unknown --toolchain nightly-2024-01-21
 
-# Create Kagome systemd service
-sudo tee /etc/systemd/system/kagome.service > /dev/null <<EOF
+echo "Cloning Polkadot SDK..."
+git clone https://github.com/paritytech/polkadot-sdk.git
+cd polkadot-sdk
+git checkout polkadot-v1.19.1
+
+echo "Building Polkadot..."
+cargo build --release
+
+echo "Setting up systemd service..."
+current_user=$(whoami)
+sudo tee /etc/systemd/system/polkadot.service > /dev/null <<EOF
 [Unit]
-Description=Kagome Node
+Description=Polkadot Validator Node
+After=network.target
 
 [Service]
-User=kagome
-Group=kagome
-LimitCORE=infinity
-LimitNOFILE=65536
-ExecStart=/usr/local/bin/kagome \\
-  --name ${NODE_NAME} \\
-  --base-path /home/kagome/polkadot-node-1 \\
-  --public-addr=/ip4/${PUBLIC_IP}/tcp/30334 \\
-  --listen-addr=/ip4/0.0.0.0/tcp/30334 \\
-  --chain polkadot \\
-  --rpc-port=9944 \\
+Type=simple
+User=$current_user
+ExecStart=$HOME/polkadot-sdk/target/release/polkadot \\
+  --validator \\
+  --name "$STARTNAME" \\
+  --chain=polkadot \\
+  --database RocksDb \\
+  --state-pruning 1000 \\
+  --port 30333 \\
+  --rpc-port 9933 \\
+  --prometheus-external \\
   --prometheus-port=9615 \\
-  --telemetry-url 'wss://telemetry.polkadot.io/submit/ 1' \\
-  --telemetry-url 'wss://telemetry-backend.w3f.community/submit/ 1' \\
-  --node-key 63808171009b35fc218f207442e355b0634561c84e0aec2093e3515113475624 \\
-  --database rocksdb \\
-  --sync Warp \\
-  --enable-db-migration
-
+  --unsafe-force-node-key-generation \\
+  --telemetry-url "wss://telemetry-backend.w3f.community/submit/ 1" \\
+  --telemetry-url "wss://telemetry.polkadot.io/submit/ 0"
 Restart=always
 RestartSec=10
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
+echo "Starting and enabling Polkadot node service..."
 sudo systemctl daemon-reload
-sudo systemctl enable kagome
-sudo systemctl start kagome
+sudo systemctl enable polkadot.service
+sudo systemctl restart polkadot.service
 
 # Install Node Exporter
 cd $HOME
