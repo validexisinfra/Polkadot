@@ -235,11 +235,11 @@ cd ~
 wget https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz
 tar xvf alertmanager-0.24.0.linux-amd64.tar.gz
 rm alertmanager-0.24.0.linux-amd64.tar.gz
-mkdir -p /etc/alertmanager /var/lib/prometheus/alertmanager
+sudo mkdir -p /etc/alertmanager /var/lib/prometheus/alertmanager
 cd alertmanager-0.24.0.linux-amd64
 sudo cp alertmanager amtool /usr/local/bin/
 sudo cp alertmanager.yml /etc/alertmanager/alertmanager.yml
-sudo useradd --no-create-home --shell /bin/false alertmanager
+sudo useradd --no-create-home --shell /bin/false alertmanager || true
 sudo chown -R alertmanager:alertmanager /etc/alertmanager /var/lib/prometheus/alertmanager
 sudo chown alertmanager:alertmanager /usr/local/bin/{alertmanager,amtool}
 
