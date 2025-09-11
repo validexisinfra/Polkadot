@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
+# ---- settings ----
 NODE_VERSION="${NODE_VERSION:-v20.12.2}"
 NVM_VERSION="${NVM_VERSION:-v0.39.7}"
 APP_DIR="${APP_DIR:-$HOME/substrate-simple-payout}"
 POLKADOT_VERSION="${POLKADOT_VERSION:-polkadot-stable2506}"
 BIN_DIR="${BIN_DIR:-/usr/local/bin}"
+# ------------------
+
+(
+set -euo pipefail
 
 say(){ printf "\n\033[1;36m%s\033[0m\n" "$*"; }
 
@@ -75,6 +79,7 @@ fi
 say "[6/8] Downloading Polkadot binary ${POLKADOT_VERSION} with signature"
 REL_URL="https://github.com/paritytech/polkadot-sdk/releases/download/${POLKADOT_VERSION}"
 TMP_DIR="$(mktemp -d)"
+# local cleanup only inside subshell
 trap 'rm -rf "${TMP_DIR}"' EXIT
 cd "${TMP_DIR}"
 curl -fLO "${REL_URL}/polkadot"
@@ -112,3 +117,4 @@ Polkadot binary installed:
 To override versions next time:
   POLKADOT_VERSION=polkadot-stableXXXX NODE_VERSION=v22.x bash payout.sh
 EOF
+)
