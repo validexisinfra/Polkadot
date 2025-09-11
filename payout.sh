@@ -1,87 +1,70 @@
-tee install_simple_payout.sh >/dev/null <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 
-# -------- settings --------
 NODE_VERSION="v20.12.2"
-REPO_URL="https://github.com/helikon-labs/substrate-simple-payout.git"
-APP_DIR="${HOME}/substrate-simple-payout"
 NVM_VERSION="v0.39.7"
-# --------------------------
+APP_DIR="$HOME/substrate-simple-payout"
 
-echo "[1/6] Installing base packages..."
-if command -v apt >/dev/null 2>&1; then
-  apt update -y
-  DEBIAN_FRONTEND=noninteractive apt install -y git curl ca-certificates build-essential python3
+say() { printf "\n\033[1;36m%s\033[0m\n" "$*"; }
+
+say "[1/6] Fix Parity repo key (or skip if fails)"
+sudo mkdir -p /etc/apt/keyrings
+if sudo gpg --keyserver keyserver.ubuntu.com --recv-keys 94A4029AB4B35DAE; then
+  sudo gpg --export 94A4029AB4B35DAE | sudo tee /etc/apt/keyrings/parity.gpg >/dev/null
+  echo 'deb [signed-by=/etc/apt/keyrings/parity.gpg] https://releases.parity.io/deb release main' \
+   | sudo tee /etc/apt/sources.list.d/parity.list >/dev/null
 else
-  echo "apt not found. This script targets Debian/Ubuntu. Abort."
-  exit 1
+  echo "⚠️ Keyserver error, removing Parity repo to continue..."
+  sudo rm -f /etc/apt/sources.list.d/parity.list
 fi
 
-echo "[2/6] Installing NVM if missing..."
-export NVM_DIR="${HOME}/.nvm"
-if [ ! -s "${NVM_DIR}/nvm.sh" ]; then
-  curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh" | bash
+say "[2/6] Install base packages"
+sudo apt update
+sudo apt install -y git curl ca-certificates build-essential python3
+
+say "[3/6] Install NVM and Node.js ${NODE_VERSION}"
+export NVM_DIR="$HOME/.nvm"
+if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash
 fi
 # shellcheck disable=SC1090
-. "${NVM_DIR}/nvm.sh"
-
-echo "[3/6] Installing Node.js ${NODE_VERSION} (comes with npm)..."
-if ! nvm ls "${NODE_VERSION}" >/dev/null 2>&1; then
-  nvm install "${NODE_VERSION}"
-fi
-nvm alias default "${NODE_VERSION}" >/dev/null
-nvm use default >/dev/null
-
+. "$NVM_DIR/nvm.sh"
+nvm install -s ${NODE_VERSION}
+nvm alias default ${NODE_VERSION}
+nvm use default
 echo "Node: $(node -v) | npm: $(npm -v)"
 
-echo "[4/6] Cloning repository..."
-if [ -d "${APP_DIR}/.git" ]; then
-  echo "Repo already exists at ${APP_DIR}, pulling latest..."
-  git -C "${APP_DIR}" pull --ff-only
+say "[4/6] Clone substrate-simple-payout"
+if [ -d "$APP_DIR/.git" ]; then
+  git -C "$APP_DIR" pull --ff-only
 else
-  git clone --depth=1 "${REPO_URL}" "${APP_DIR}"
+  git clone --depth=1 https://github.com/helikon-labs/substrate-simple-payout.git "$APP_DIR"
 fi
 
-echo "[5/6] Preparing .env..."
-cd "${APP_DIR}"
+say "[5/6] Prepare .env"
+cd "$APP_DIR"
 if [ ! -f ".env" ]; then
   cp .env.sample .env
-  echo "# .env created from .env.sample — edit it before running in production" >> .env
+  echo "# ⚠️ Edit this file and fill SUBSTRATE_RPC_URL, MNEMONIC, STASHES" >> .env
 fi
 
-echo "[6/6] Installing npm dependencies..."
-if [ -f package-lock.json ]; then
-  npm ci
-else
-  npm install
-fi
+say "[6/6] Install npm dependencies"
+npm install
 
-cat <<'MSG'
+cat <<EOF
 
-✅ Installation finished.
+✅ Installation finished!
 
 Next steps:
-1) Edit your env file:
-   nano '"${APP_DIR}"'/.env
-   (set RPC_ENDPOINT/NETWORK and your payout key or mnemonic — do NOT keep secrets on shared hosts)
+  cd $APP_DIR
+  nano .env     # configure RPC, mnemonic, stashes
 
-2) Run the tool:
-   cd '"${APP_DIR}"'
-   npm start
-   # or daemon mode:
-   npm start -- --daemon
-   # show available actions:
-   npm start -- --list
+Run once:
+  npm start
 
-Tips:
-- To update later:
-    cd '"${APP_DIR}"' && git pull && npm ci
-- Current Node in this shell:
-    node -v && npm -v
+Run daemon (loop payouts):
+  npm start -- --daemon
 
-MSG
+Only list unclaimed payouts:
+  npm start -- --list
 EOF
-
-chmod +x install_simple_payout.sh
-bash install_simple_payout.sh
