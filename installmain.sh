@@ -12,7 +12,7 @@ sudo apt install -y \
   apt-transport-https gnupg cmake protobuf-compiler lz4
 
 echo "Installing GO..."
-GO_VERSION=1.24.2
+GO_VERSION=1.24.6
 curl -Ls https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
 echo 'export PATH=/usr/local/go/bin:$HOME/go/bin:$PATH' | sudo tee /etc/profile.d/golang.sh > /dev/null
 echo 'export PATH=/usr/local/go/bin:$HOME/go/bin:$PATH' >> ~/.bashrc
