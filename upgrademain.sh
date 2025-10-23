@@ -8,7 +8,7 @@ sudo systemctl stop polkadot.service
 echo "Updating Polkadot SDK repository..."
 cd $HOME/polkadot-sdk
 git fetch
-git checkout polkadot-v1.20.0
+git checkout polkadot-v1.20.1
 
 echo "Rebuilding Polkadot..."
 cargo build --release
