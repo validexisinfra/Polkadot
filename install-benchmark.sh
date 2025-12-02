@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 sudo apt update && sudo apt install -y \
@@ -14,6 +13,8 @@ rustup target add wasm32-unknown-unknown
 rustup component add rust-src
 
 cargo install frame-omni-bencher
+
+rm -rf polkadot-sdk
 
 git clone https://github.com/paritytech/polkadot-sdk.git
 cd polkadot-sdk
@@ -34,4 +35,4 @@ frame-omni-bencher v1 benchmark pallet \
 echo "✅ Benchmark results saved in weights.rs"
 
 echo "🖥️ Running hardware benchmark..."
-cargo run --release --features=runtime-benchmarks --bin polkadot -- benchmark machine
+cargo run --release --features runtime-benchmarks --bin node-benchmark -- benchmark machine
